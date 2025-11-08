@@ -27,8 +27,8 @@ class UserSeeder extends Seeder
         ]);
 
         $cashier = User::firstOrCreate([
-            'username' => 'cashier_hassan',
-            'email' => 'cashier_hassan@example.com',
+            'username' => 'hassan',
+            'email' => 'hassan@example.com',
             'phone' => '0599916673',
         ], [
             'name' => 'Cashier Hassan',

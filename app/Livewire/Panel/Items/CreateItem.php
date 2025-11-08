@@ -4,6 +4,7 @@ namespace App\Livewire\Panel\Items;
 
 use App\Helpers\LivewireHelper;
 use App\Http\Requests\ItemRequest;
+use App\Models\Item;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
@@ -45,6 +46,46 @@ class CreateItem extends Component
                 'low_stock_alert' => $this->low_stock_alert,
                 'description'     => $this->description,
             ], $rules, $messages)->validate();
+
+
+            // ✅ التحقق من الأسعار
+            if ($data['purchase_price'] < 0) {
+                throw ValidationException::withMessages([
+                    'purchase_price' => __('Quantity must be greater than zero.'),
+                ]);
+            }
+
+            if ($data['sale_price'] < 0) {
+                throw ValidationException::withMessages([
+                    'sale_price' => __('Sale price must be greater than zero.'),
+                ]);
+            }
+
+            // إذا سعر البيع < سعر الشراء
+            if (($data['sale_price'] < $data['purchase_price']) && $data['type'] === 'sale') {
+                throw ValidationException::withMessages([
+                    'sale_price' => __('Sale price cannot be less than purchase price.'),
+                ]);
+            }
+
+            // ✅ التحقق من الكمية
+            if ($data['quantity'] < 0) {
+                throw ValidationException::withMessages([
+                    'quantity' => __('Quantity must be greater than zero.'),
+                ]);
+            }
+
+            // ✅ تحقق من الكود
+            if (Item::where('code', $data['code'])->exists()) {
+                throw ValidationException::withMessages([
+                    'code' => __('Item code is already in use, please enter a different code.'),
+                ]);
+            }
+
+            // Set initial quantity to quantity_total
+            $data['quantity_total'] = $data['quantity'];
+            $data['reserved_quantity'] = 0;
+            $data['available_quantity'] = $data['quantity'];
 
             $service = $this->setService('ItemService');
             $item = $service->store($data);

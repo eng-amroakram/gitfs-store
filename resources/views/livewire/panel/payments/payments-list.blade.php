@@ -141,8 +141,6 @@
                         <td>
                             @if ($payment->synced_at)
                                 <span class="badge badge-success">{{ __('Synced') }}</span>
-                                <br>
-                                <small>{{ $payment->synced_at->format('Y-m-d H:i') }}</small>
                             @else
                                 <span class="badge badge-danger">{{ __('Unsynced') }}</span>
                             @endif

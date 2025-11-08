@@ -29,8 +29,8 @@ class Sale extends Model
         "updated_by",
     ];
 
-    protected $hidden = [
-        'id',
+    protected $casts = [
+        'synced_at' => 'datetime',
     ];
 
     public function scopeData($builder)

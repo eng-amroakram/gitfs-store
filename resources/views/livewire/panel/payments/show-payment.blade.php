@@ -57,14 +57,23 @@
                     <ul class="list-group list-group-flush mb-3">
                         <li class="list-group-item d-flex justify-content-between">
                             <span>الإجمالي</span>
-                            <strong>{{ number_format($payment->paymentable->total ?? $payment->paymentable->grand_total, 2) }}</strong>
+                            @php
+                                // للمبيعات: نستخدم grand_total (بعد الخصم)
+                                // للحجوزات: نستخدم total (بعد الخصم)
+                                $totalAmount = $payment->paymentable instanceof \App\Models\Sale
+                                    ? $payment->paymentable->grand_total
+                                    : $payment->paymentable->total;
+                            @endphp
+                            <strong>{{ number_format($totalAmount, 2) }}</strong>
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <span>المدفوع حتى الآن</span>
                             @php
                                 $totalPaid = $payment->paymentable->payments->sum('amount');
+
+                                // للحجوزات: أضف العربون
                                 if ($payment->paymentable instanceof \App\Models\Reservation) {
-                                    $totalPaid += $payment->paymentable->deposit; // ✅ أضف العربون
+                                    $totalPaid += $payment->paymentable->deposit;
                                 }
                             @endphp
                             <strong>{{ number_format($totalPaid, 2) }}</strong>
@@ -73,11 +82,26 @@
                         <li class="list-group-item d-flex justify-content-between">
                             <span>المتبقي</span>
                             @php
-                                $totalAmount = $payment->paymentable->total ?? $payment->paymentable->grand_total;
                                 $remaining = $totalAmount - $totalPaid;
                             @endphp
                             <strong class="text-danger">{{ number_format(max($remaining, 0), 2) }}</strong>
                         </li>
+
+                        {{-- إضافة معلومات الخصم إذا وجد --}}
+                        @if($payment->paymentable->discount > 0)
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>الخصم</span>
+                                <strong class="text-success">{{ number_format($payment->paymentable->discount, 2) }}</strong>
+                            </li>
+                        @endif
+
+                        {{-- إضافة معلومات العربون للحجوزات --}}
+                        @if($payment->paymentable instanceof \App\Models\Reservation && $payment->paymentable->deposit > 0)
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>العربون</span>
+                                <strong class="text-info">{{ number_format($payment->paymentable->deposit, 2) }}</strong>
+                            </li>
+                        @endif
                     </ul>
 
                     {{-- جدول العناصر إذا كانت مبيعة --}}

@@ -5,6 +5,7 @@ namespace App\Livewire\Panel\Users;
 use App\Helpers\LivewireHelper;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -54,7 +55,8 @@ class EditUser extends Component
         $messages = $request->messages();
 
         // دمج user_id للتعديل
-        $data = Validator::make([
+
+        $data = [
             'user_id' => $this->userId,
             'name' => $this->name,
             'username' => $this->username,
@@ -62,11 +64,16 @@ class EditUser extends Component
             'phone' => $this->phone,
             'role' => $this->role,
             'status' => $this->status,
-            'password' => $this->password,
-        ], $rules, $messages)->validate();
+        ];
+
+        if ($this->password) {
+            $data['password'] = Hash::make($this->password);
+        }
+
+        $dataRes = Validator::make($data, $rules, $messages)->validate();
 
         $service = $this->setService('UserService');
-        $user = $service->update($data, $this->userId);
+        $user = $service->update($dataRes, $this->userId);
 
         if ($user) {
             $this->alertMessage(__('User updated successfully.'), 'success');

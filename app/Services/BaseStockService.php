@@ -20,6 +20,7 @@ class BaseStockService
         }
 
         $item->available_quantity = $item->quantity_total - $item->reserved_quantity;
+        $item->synced_at = null; // تعيين synced_at إلى null عند زيادة المخزون
         $item->save();
 
         // سجل الحركة
@@ -50,6 +51,7 @@ class BaseStockService
         }
 
         $item->available_quantity = $item->quantity_total - $item->reserved_quantity;
+        $item->synced_at = null; // تعيين synced_at إلى null عند خصم المخزون
         $item->save();
 
         // سجل الحركة
@@ -76,6 +78,7 @@ class BaseStockService
 
         $item->reserved_quantity += $quantity;
         $item->available_quantity = $item->quantity_total - $item->reserved_quantity;
+        $item->synced_at = null; // تعيين synced_at إلى null عند حجز المخزون
         $item->save();
 
         ItemMovement::create([
@@ -101,6 +104,7 @@ class BaseStockService
         }
 
         $item->available_quantity = $item->quantity_total - $item->reserved_quantity;
+        $item->synced_at = null; // تعيين synced_at إلى null عند إلغاء حجز المخزون
         $item->save();
 
         ItemMovement::create([

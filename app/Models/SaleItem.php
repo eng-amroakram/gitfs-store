@@ -15,14 +15,6 @@ class SaleItem extends Model
         'synced_at',
     ];
 
-    protected $hidden = [
-        'id',
-        'sale_id',
-        'item_id',
-        'created_at',
-        'updated_at',
-    ];
-
     public function item()
     {
         return $this->belongsTo(Item::class);

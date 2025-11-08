@@ -57,7 +57,13 @@ class ReservationService extends BaseStockService
     {
         return DB::transaction(function () use ($data) {
             $data['user_id'] = Auth::id();
+            $data['synced_at'] = now();
             $reservation = Reservation::store($data);
+
+            foreach ($data['items'] as $key => $item) {
+                $data['items'][$key]['synced_at'] = now();
+            }
+
             $reservation->items()->createMany($data['items']);
 
             // حجز المخزون

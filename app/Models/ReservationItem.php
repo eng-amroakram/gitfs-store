@@ -12,15 +12,7 @@ class ReservationItem extends Model
         'quantity',
         'price',
         'subtotal',
-        'synced_at',
-    ];
-
-    protected $hidden = [
-        'id',
-        'reservation_id',
-        'item_id',
-        'created_at',
-        'updated_at',
+        'status',
         'synced_at',
     ];
 

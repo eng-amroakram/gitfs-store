@@ -109,8 +109,7 @@
                         {{-- <td>{{ $customer->created_at->format('Y-m-d H:i') }}</td> --}}
                         <td>
                             @if ($customer->synced_at)
-                                <span
-                                    class="badge badge-success">{{ $customer->synced_at->format('Y-m-d H:i') }}</span>
+                                <span class="badge badge-success" dir="ltr">{{ $customer->synced_at }}</span>
                             @else
                                 <span class="badge badge-light">{{ __('Not Synced') }}</span>
                             @endif

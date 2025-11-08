@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class UserService
@@ -17,6 +16,16 @@ class UserService
     public function model($id)
     {
         return User::find($id);
+    }
+
+    public function all(array $filters = [], $columns = ['*'])
+    {
+        return User::filters($filters)->select($columns)->get();
+    }
+
+    public function allUnsynced(array $filters = [], $columns = ['*'])
+    {
+        return User::whereNull('synced_at')->select($columns)->get();
     }
 
     public function data($filters, $sort_field, $sort_direction, $paginate = 10)
@@ -45,5 +54,10 @@ class UserService
     public function update($data, $id)
     {
         return User::updateModel($data, $id);
+    }
+
+    public function confirmSync($ids)
+    {
+        return User::whereIn('id', $ids)->update(['synced_at' => now()]);
     }
 }

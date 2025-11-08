@@ -50,7 +50,14 @@ class SaleService extends BaseStockService
     public function store($data)
     {
         return DB::transaction(function () use ($data) {
+            $data['synced_at'] = now();
             $sale = Sale::store($data);
+
+            // إدخال البنود
+            foreach ($data['items'] as $key => $item) {
+                $data['items'][$key]['synced_at'] = now();
+            }
+
             $sale->items()->createMany($data['items']);
 
             // خصم المخزون

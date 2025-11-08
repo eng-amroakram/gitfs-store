@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 12, 2);
             $table->decimal('subtotal', 12, 2);
+            $table->enum('status', ['reserved', 'released', 'canceled'])->default('reserved');
             $table->timestamps();
             $table->timestamp('synced_at')->nullable();
         });

@@ -41,6 +41,7 @@ class PaymentService extends BaseStockService
                 'amount'     => $data['amount'],
                 'method'     => $data['method'] ?? 'cash',
                 'created_by' => Auth::id(),
+                'synced_at'  => now(),
             ]);
 
             $this->updateStatusAndRemaining($model);
@@ -153,6 +154,7 @@ class PaymentService extends BaseStockService
         $customer->sale_balance        = $saleBalance;
         $customer->reservation_balance = $reservationBalance;
         $customer->total_balance       = $saleBalance + $reservationBalance;
+        $customer->synced_at           = null;
 
         $customer->save();
     }

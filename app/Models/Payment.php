@@ -26,21 +26,6 @@ class Payment extends Model
         'updated_by',
     ];
 
-    protected $hidden = [
-        'id',
-        'uuid',
-        // 'sale_id',
-        'paymentable_id',
-        'paymentable_type',
-        'customer_id',
-        'payment_reference',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'created_by',
-        'updated_by',
-    ];
-
     public function scopeData($builder)
     {
         return $builder->select([

@@ -154,7 +154,7 @@
             </div>
         </div>
 
-        <!-- Recent Entities Section -->
+        {{-- <!-- Recent Entities Section -->
         <div class="row mt-4">
             <div class="col-md-6 mb-4">
                 <div class="card shadow">
@@ -285,7 +285,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> --}}
     @endcan
 
 </div>

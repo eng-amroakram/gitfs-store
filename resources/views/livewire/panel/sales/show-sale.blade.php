@@ -89,4 +89,76 @@
             </div>
         </div>
     </div>
+
+    {{-- تفاصيل الدفعات --}}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold mb-3">تفاصيل الدفعات</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle mb-0 mb-2">
+                            <thead >
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">المرجع</th>
+                                    <th class="text-center">المبلغ</th>
+                                    <th class="text-center">التاريخ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($sale->payments as $payment)
+                                    <tr>
+                                        <td class="text-center"><span dir="ltr">{{ $loop->iteration }}</span></td>
+                                        <td class="text-center"><span dir="ltr">{{ $payment->payment_reference }}</span></td>
+                                        <td class="text-center"><span dir="ltr">{{ number_format($payment->amount, 2) }}</span></td>
+                                        <td class="text-center"><span dir="ltr">{{ $payment->created_at->format('Y-m-d H:i') }}</span></td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted">لا توجد دفعات</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        <div class="mt-3">
+                            <strong>الإجمالي المدفوع:
+                                <span class="badge badge-success" dir="ltr">
+                                    {{ number_format($sale->payments->sum('amount'), 2) }}
+                                </span>
+                            </strong>
+                            <div class="mt-2">
+                                <strong>المتبقي للدفع:
+                                    <span class="badge badge-danger" dir="ltr">
+                                        {{ number_format($sale->grand_total - $sale->payments->sum('amount'), 2) }}
+                                    </span>
+                                </strong>
+                                <div class="mt-2">
+                                    <strong>حالة الدفع:
+                                        <span
+                                            class="badge
+                                            @if ($sale->status == 'paid') badge-success
+                                            @elseif($sale->status == 'partial') badge-warning
+                                            @else badge-danger @endif">
+                                            {{ $sale->status }}
+                                        </span>
+                                    </strong>
+                                    <div class="mt-2">
+                                        <strong>تاريخ الدفع:
+                                            <span class="badge badge-info" dir="ltr">
+                                                {{ $sale->created_at ? $sale->created_at->format('Y-m-d H:i') : 'غير محدد' }}
+                                            </span>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="height:6rem"></div>
 </div>
+

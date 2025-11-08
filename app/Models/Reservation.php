@@ -32,13 +32,10 @@ class Reservation extends Model
         'updated_by',
     ];
 
-    protected $hidden = [
-        'id',
-        'customer_id',
-        'user_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'synced_at' => 'datetime',
     ];
 
     /*

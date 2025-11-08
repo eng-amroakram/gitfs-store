@@ -125,8 +125,8 @@
                                 <span class="text-muted">{{ __('N/A') }}</span>
                             @endif
                         </td>
-                        <td>{{ $reservation->start_date }}</td>
-                        <td>{{ $reservation->end_date }}</td>
+                        <td>{{ $reservation->start_date->format('Y-m-d H:i') }}</td>
+                        <td>{{ $reservation->end_date->format('Y-m-d H:i') }}</td>
                         <td>{{ number_format($reservation->deposit, 2) }}</td>
                         <td>{{ number_format($reservation->total, 2) }}</td>
                         <td>{{ number_format($reservation->remaining, 2) }}</td>

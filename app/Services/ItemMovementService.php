@@ -25,6 +25,24 @@ class ItemMovementService
         ])->find($id);
     }
 
+    public function allUnsynced($columns = ['*'])
+    {
+        return ItemMovement::with([
+            'item',
+            'createdBy',
+            'updatedBy'
+        ])->whereNull('synced_at')->select($columns)->get();
+    }
+
+    public function all($filters = [], $columns = ['*'])
+    {
+        return ItemMovement::with([
+            'item',
+            'createdBy',
+            'updatedBy'
+        ])->filters($filters)->select($columns)->get();
+    }
+
     public function data($filters, $sort_field, $sort_direction, $paginate = 10)
     {
         return ItemMovement::data()
@@ -114,5 +132,10 @@ class ItemMovementService
 
             return $movement;
         });
+    }
+
+    public function confirmSync($ids)
+    {
+        return ItemMovement::whereIn('id', $ids)->update(['synced_at' => now()]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Livewire\Panel\Users;
 
 use App\Helpers\LivewireHelper;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -42,7 +43,7 @@ class CreateUser extends Component
             'phone' => $this->phone,
             'role' => $this->role,
             'status' => $this->status,
-            'password' => $this->password,
+            'password' => Hash::make($this->password),
         ], $rules, $messages)->validate();
 
         // استخدام الخدمة لتخزين البيانات

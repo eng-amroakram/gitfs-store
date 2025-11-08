@@ -49,6 +49,7 @@ class PurchaseService extends BaseStockService
         return DB::transaction(function () use ($data) {
 
             // إنشاء فاتورة الشراء
+            $data['synced_at'] = now();
             $purchase = Purchase::store($data);
 
             // إضافة البنود

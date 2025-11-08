@@ -103,7 +103,6 @@
             @endcan
 
             <!-- Stock Management -->
-            @can('view-stock', Auth::user())
                 <li class="sidenav-item">
                     <a class="sidenav-link">
                         <i class="fas fa-boxes-stacked fa-fw {{ $locale ? 'me-3' : 'me-3' }}"></i>
@@ -126,7 +125,6 @@
                         </li>
                     </ul>
                 </li>
-            @endcan
 
             <!-- Sales -->
             @can('view-sales', Auth::user())

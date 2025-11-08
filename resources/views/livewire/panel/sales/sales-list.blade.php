@@ -125,7 +125,7 @@
                         </td>
                         <td>{{ $sale->created_at->format('Y-m-d H:i') }}</td>
                         <td>
-                            @if (!$sale->payments()->exists())
+                            {{-- @if (!$sale->payments()->exists())
                                 <!-- Edit Icon -->
                                 <span wire:loading.remove wire:target="edit({{ $sale->id }})">
                                     <a href="#edit" wire:click="edit({{ $sale->id }})"
@@ -148,7 +148,7 @@
                                     <span class="spinner-border spinner-border-sm text-danger me-2 ms-2"
                                         role="status"></span>
                                 </span>
-                            @endif
+                            @endif --}}
 
                             <!-- Show Sale Icon -->
                             <span wire:loading.remove wire:target="show({{ $sale->id }})">
