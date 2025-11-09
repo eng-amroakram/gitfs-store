@@ -1,12 +1,6 @@
 <?php
 
-use App\Http\Controllers\ItemMovementsSyncController;
-use App\Http\Controllers\Panel\ItemsSyncController;
-use App\Http\Controllers\Panel\PaymentsSyncController;
-use App\Http\Controllers\Panel\ReservationsSyncController;
-use App\Http\Controllers\Panel\SalesSyncController;
-use App\Http\Controllers\Panel\SyncController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SyncController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('panel')->group(function () {
