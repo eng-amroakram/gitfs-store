@@ -28,6 +28,11 @@ class UserService
         return User::whereNull('synced_at')->select($columns)->get();
     }
 
+    public function confirmSync($ids)
+    {
+        return User::whereIn('id', $ids)->update(['synced_at' => now()]);
+    }
+
     public function data($filters, $sort_field, $sort_direction, $paginate = 10)
     {
         return User::data()
@@ -54,10 +59,5 @@ class UserService
     public function update($data, $id)
     {
         return User::updateModel($data, $id);
-    }
-
-    public function confirmSync($ids)
-    {
-        return User::whereIn('id', $ids)->update(['synced_at' => now()]);
     }
 }
