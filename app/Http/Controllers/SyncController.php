@@ -62,28 +62,9 @@ class SyncController extends Controller
      * جلب المستخدمين النشطين (مزامنة عامة بدون توثيق)
      */
 
-    public function publicUsersSync()
+    public function publicUnUsersSync()
     {
-        $records = User::select([
-            'id',
-            'uuid',
-            'name',
-            'username',
-            'email',
-            'phone',
-            'role',
-            'status',
-            'last_login_at',
-            'synced_at',
-            'created_at',
-            'updated_at',
-            'deleted_at',
-            'created_by',
-            'updated_by',
-            'token',
-        ])
-            ->where('status', 'active')
-            ->get();
+        $records = $this->syncService->getUnsyncedUsers(User::class);
 
         return response()->json([
             'status' => 'success',
@@ -91,6 +72,28 @@ class SyncController extends Controller
             'count' => $records->count(),
             'data' => $records,
         ]);
+    }
+
+    public function publicConfirmUsersSync(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return response()->json(['message' => 'No IDs provided'], 400);
+        }
+
+        DB::beginTransaction();
+        try {
+            $count = $this->syncService->confirmUsersSync(User::class, $ids);
+            DB::commit();
+            return response()->json([
+                'message' => "Synced {$count} users",
+                'count' => $count
+            ]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Sync failed', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**

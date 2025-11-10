@@ -6,6 +6,35 @@ use App\Models\SyncLogs;
 
 class SyncService
 {
+    public function getUnsyncedUsers($modelClass, $columns = ['*'])
+    {
+        return $modelClass::whereNotIn('id', function ($query) use ($modelClass) {
+            $query->select('syncable_id')
+                ->from('sync_logs')
+                ->where('syncable_type', $modelClass);
+        })->select($columns)->get();
+    }
+
+    public function confirmUsersSync($modelClass, array $ids)
+    {
+        $count = 0;
+
+        foreach ($ids as $id) {
+            $log = SyncLogs::updateOrCreate(
+                [
+                    'syncable_id' => $id,
+                    'syncable_type' => $modelClass,
+                ],
+                [
+                    'synced_at' => now()
+                ]
+            );
+            if ($log) $count++;
+        }
+
+        return $count;
+    }
+
     /**
      * جلب السجلات الغير مزامنة مع المستخدم
      */

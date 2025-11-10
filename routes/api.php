@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('panel')->group(function () {
     // 🟢 المرحلة 1: مزامنة عامة بدون توثيق (لأول مرة فقط)
-    Route::get('bootstrap/users', [SyncController::class, 'publicUsersSync']);
+    Route::get('bootstrap/users', [SyncController::class, 'publicUnUsersSync']);
+    Route::post('bootstrap/users/confirm', [SyncController::class, 'publicConfirmUsersSync']);
 
     // login route
     Route::post('login', [SyncController::class, 'login']);
