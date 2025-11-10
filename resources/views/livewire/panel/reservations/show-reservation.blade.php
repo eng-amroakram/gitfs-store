@@ -42,6 +42,11 @@
                                 {{ number_format($reservation->deposit, 2) }}
                             </span>
                         </li>
+                        <li class="list-group-item">الخصم:
+                            <span class="badge badge-secondary text-dark px-2" dir="ltr">
+                                {{ number_format($reservation->discount, 2) }}
+                            </span>
+                        </li>
                         <li class="list-group-item">الإجمالي:
                             <span class="badge badge-warning text-dark px-2" dir="ltr">
                                 {{ number_format($reservation->total, 2) }}

@@ -232,6 +232,9 @@ class SyncController extends Controller
             $paymentsData = $request->input('payments', []);
             foreach ($paymentsData as $paymentData) {
                 $payment = Payment::firstOrNew(['uuid' => $paymentData['uuid'] ?? null]);
+
+                $paymentData['paymentable_type'] = $paymentData['paymentable_type'] === 'sale' ? "App\Models\Sale" : "App\Models\Reservation";
+
                 $payment->fill(array_merge($paymentData, ['synced_at' => now()]));
                 $payment->save();
                 $this->syncService->logSync($user->id, $payment);
