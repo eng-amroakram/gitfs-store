@@ -1,6 +1,5 @@
 <div style="width: 30rem;">
     <div>
-        @csrf
         <!-- Username input -->
         <div class="input-group input-group-lg mb-3">
             <span class="input-group-text">
@@ -38,10 +37,10 @@
             </div>
         </div>
 
-        <button wire:click="loginT" class="btn">Click Me</button>
+        <button type="button" wire:click="loginT" class="btn">Click Me</button>
 
         <!-- Submit button -->
-        <button type="submit" class="btn btn-lg btn-block bg-danger text-white" wire:click="login"
+        <button type="button" class="btn btn-lg btn-block bg-danger text-white" wire:click="login"
             wire:loading.attr="disabled">
             <span wire:loading wire:target="login">
                 <i class="fas fa-spinner fa-spin text-white me-2"></i>
