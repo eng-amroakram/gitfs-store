@@ -78,7 +78,7 @@ class SyncController extends Controller
             'created_at',
             'updated_at',
         ])
-            ->where('active', true)
+            ->where('status', 'active')
             ->get();
 
         return response()->json([
