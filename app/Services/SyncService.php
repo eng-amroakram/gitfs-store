@@ -22,7 +22,7 @@ class SyncService
         foreach ($ids as $id) {
             $log = SyncLogs::updateOrCreate(
                 [
-                    'user_id' => 1,
+                    'user_id' => null,
                     'syncable_id' => $id,
                     'syncable_type' => $modelClass,
                 ],

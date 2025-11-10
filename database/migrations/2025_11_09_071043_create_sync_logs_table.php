@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('sync_logs', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->uuidMorphs('syncable'); // syncable_id + syncable_type
             $table->timestamp('synced_at')->nullable();
             $table->timestamps();
