@@ -86,6 +86,6 @@ class ItemService
     {
         return SyncLogs::where('syncable_type', Item::class)
             ->where('syncable_id', $item->id)
-            ->delete();
+            ->forceDelete();
     }
 }
