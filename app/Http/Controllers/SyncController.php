@@ -48,6 +48,10 @@ class SyncController extends Controller
         if ($user && Hash::check($credentials['password'], $user->password)) {
             $token = $user->createToken('api-token')->plainTextToken;
 
+            $user->token = $token;
+            $user->last_login_at = now();
+            $user->save();
+
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $token,
