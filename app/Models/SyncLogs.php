@@ -11,6 +11,7 @@ class SyncLogs extends Model
     use SoftDeletes, HasUuid;
 
     protected $fillable = [
+        'uuid',
         'user_id',
         'syncable_id',
         'syncable_type',
