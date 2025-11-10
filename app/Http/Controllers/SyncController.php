@@ -39,6 +39,37 @@ class SyncController extends Controller
     }
 
     /**
+     * جلب المستخدمين النشطين (مزامنة عامة بدون توثيق)
+     */
+
+    public function publicUsersSync()
+    {
+        $records = User::select([
+            'uuid',
+            'name',
+            'username',
+            'email',
+            'phone',
+            'role',
+            'status',
+            'password',
+            'last_login_at',
+            'synced_at',
+            'created_at',
+            'updated_at',
+        ])
+            ->where('active', true)
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'entity' => 'users',
+            'count' => $records->count(),
+            'data' => $records,
+        ]);
+    }
+
+    /**
      * جلب السجلات الغير مزامنة للمستخدم
      */
     public function sync(Request $request, $entity)
