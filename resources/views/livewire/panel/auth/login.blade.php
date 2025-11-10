@@ -1,5 +1,5 @@
 <div style="width: 30rem;">
-    <form wire:submit.prevent="login">
+    <div>
         <!-- Username input -->
         <div class="input-group input-group-lg mb-3">
             <span class="input-group-text">
@@ -42,10 +42,10 @@
             <span wire:loading wire:target="login">
                 <i class="fas fa-spinner fa-spin text-white me-2"></i>
             </span>
-            <span wire:loading.remove wire:target="login">
+            <span wire:loading.remove wire:target="login" wire:click="login">
                 <i class="fas fa-sign-in-alt me-2"></i>
                 <span>Login</span>
             </span>
         </button>
-    </form>
+    </div>
 </div>
