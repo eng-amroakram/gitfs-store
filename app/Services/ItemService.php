@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Item;
+use App\Models\SyncLog;
+use App\Models\SyncLogs;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -22,11 +24,6 @@ class ItemService
             'saleItems.sale.customer',
             'purchaseItems.purchase.supplier'
         ])->find($id);
-    }
-
-    public function allUnsynced($columns = ['*'])
-    {
-        return Item::whereNull('synced_at')->select($columns)->get();
     }
 
     public function all(array $filters = [], $columns = ['*'])
@@ -64,6 +61,10 @@ class ItemService
         return DB::transaction(function () use ($data, $id) {
             $item = Item::findOrFail($id);
             $item->update($data);
+
+            // إزالة سجلات المزامنة عند التحديث
+            $this->clearSyncLogs($item);
+
             return $item;
         });
     }
@@ -76,5 +77,15 @@ class ItemService
     public function confirmSync($ids)
     {
         return Item::whereIn('uuid', $ids)->update(['synced_at' => now()]);
+    }
+
+    /**
+     * إزالة سجلات المزامنة للصنف
+     */
+    public function clearSyncLogs($item)
+    {
+        return SyncLogs::where('syncable_type', Item::class)
+            ->where('syncable_id', $item->id)
+            ->delete();
     }
 }
