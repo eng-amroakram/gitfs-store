@@ -44,4 +44,9 @@ class Login extends Component
         Auth::login($user, $this->remember);
         return redirect()->route('admin.panel.dashboard');
     }
+
+    public function loginT()
+    {
+        dd(5555555);
+    }
 }
