@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuidMorphs('syncable'); // syncable_id + syncable_type
             $table->timestamp('synced_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unique(['user_id', 'syncable_id', 'syncable_type']);
         });
