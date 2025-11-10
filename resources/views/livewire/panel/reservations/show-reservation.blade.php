@@ -171,7 +171,7 @@
                         <span>إجمالي المدفوع حتى الآن: </span>
                         <strong class="text-success">{{ number_format($totalPaid, 2) }}</strong>
                         <span class="ms-3">المتبقي: </span>
-                        <strong class="text-danger">{{ number_format(max($reservation->total - $totalPaid, 0), 2) }}</strong>
+                        <strong class="text-danger">{{ number_format(max($reservation->remaining, 0), 2) }}</strong>
                     </div>
                 </div>
             </div>
