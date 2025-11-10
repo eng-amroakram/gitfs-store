@@ -1,5 +1,6 @@
 <div style="width: 30rem;">
     <div>
+        @csrf
         <!-- Username input -->
         <div class="input-group input-group-lg mb-3">
             <span class="input-group-text">
