@@ -37,8 +37,6 @@
             </div>
         </div>
 
-        <button type="button" wire:click="loginT" class="btn">Click Me</button>
-
         <!-- Submit button -->
         <button type="button" class="btn btn-lg btn-block bg-danger text-white" wire:click="login"
             wire:loading.attr="disabled">
