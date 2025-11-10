@@ -25,6 +25,10 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->timestamp('synced_at')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->text('token')->nullable();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

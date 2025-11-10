@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\HasUuid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,7 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory, Notifiable;
     use HasRoles, HasUuid;
+    use SoftDeletes;
 
     protected $fillable = [
         'uuid',
@@ -29,6 +31,9 @@ class User extends Authenticatable
         'password',
         'last_login_at',
         'synced_at',
+        'created_by',
+        'updated_by',
+        'token',
     ];
 
     protected $hidden = [
@@ -50,6 +55,10 @@ class User extends Authenticatable
             'synced_at',
             'created_at',
             'updated_at',
+            'deleted_at',
+            'created_by',
+            'updated_by',
+            'token',
         ]);
     }
 

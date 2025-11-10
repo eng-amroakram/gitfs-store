@@ -65,6 +65,7 @@ class SyncController extends Controller
     public function publicUsersSync()
     {
         $records = User::select([
+            'id',
             'uuid',
             'name',
             'username',
@@ -72,11 +73,14 @@ class SyncController extends Controller
             'phone',
             'role',
             'status',
-            'password',
             'last_login_at',
             'synced_at',
             'created_at',
             'updated_at',
+            'deleted_at',
+            'created_by',
+            'updated_by',
+            'token',
         ])
             ->where('status', 'active')
             ->get();
