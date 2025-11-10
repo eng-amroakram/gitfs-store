@@ -15,6 +15,7 @@ use App\Models\Payment;
 use App\Services\SyncService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class SyncController extends Controller
 {
@@ -36,6 +37,25 @@ class SyncController extends Controller
             'reservation-items' => ReservationItem::class,
             'payments' => Payment::class,
         ];
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
+
+        $user = User::where('username', $credentials['username'])->first();
+
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            $token = $user->createToken('api-token')->plainTextToken;
+
+            return response()->json([
+                'message' => 'Login successful',
+                'token' => $token,
+                'user' => $user,
+            ]);
+        }
+
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
     /**

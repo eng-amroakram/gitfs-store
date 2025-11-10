@@ -7,6 +7,9 @@ Route::prefix('panel')->group(function () {
     // 🟢 المرحلة 1: مزامنة عامة بدون توثيق (لأول مرة فقط)
     Route::get('bootstrap/users', [SyncController::class, 'publicUsersSync']);
 
+    // login route
+    Route::post('login', [SyncController::class, 'login']);
+
     // 🔒 المرحلة 2: مزامنة مؤمنة
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('sync/{entity}', [SyncController::class, 'sync']);
