@@ -7,7 +7,8 @@
             <p class="mb-1"><strong>الوصف:</strong> {{ $item->description ?? '-' }}</p>
             <p class="mb-1"><strong>سعر الشراء:</strong> {{ number_format($item->purchase_price, 2) }}</p>
             <p class="mb-1"><strong>سعر البيع:</strong> {{ number_format($item->sale_price, 2) }}</p>
-            <p class="mb-1"><strong>الرصيد الحالي:</strong> {{ $item->quantity }}</p>
+            <p class="mb-1"><strong>الرصيد الحالي:</strong> {{ $item->available_quantity }}</p>
+
         </div>
     </div>
 

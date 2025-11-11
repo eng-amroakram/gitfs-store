@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('quantity_total')->default(0);
             $table->integer('reserved_quantity')->default(0);
             $table->integer('available_quantity')->default(0);
-            $table->enum('type', ['sale', 'rental'])->default('sale');
+            $table->enum('type', ['sale', 'rental', 'both'])->default('sale');
             $table->integer('low_stock_alert')->default(1);
             $table->timestamps();
             $table->timestamp('synced_at')->nullable();
