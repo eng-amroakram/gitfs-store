@@ -149,7 +149,7 @@
                             @endif
                         </td>
                         <td>
-                            @if (!$reservation->payments()->exists())
+                            {{-- @if (!$reservation->payments()->exists())
                                 <!-- Edit Icon -->
                                 <span wire:loading.remove wire:target="edit({{ $reservation->id }})">
                                     <a href="#edit" wire:click="edit({{ $reservation->id }})"
@@ -172,7 +172,7 @@
                                     <span class="spinner-border spinner-border-sm text-danger me-2 ms-2"
                                         role="status"></span>
                                 </span>
-                            @endif
+                            @endif --}}
 
                             <!-- Show Icon -->
                             <span wire:loading.remove wire:target="show({{ $reservation->id }})">

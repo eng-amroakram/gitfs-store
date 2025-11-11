@@ -154,7 +154,7 @@
                         </td>
                         <td>
                             <!-- Edit Icon -->
-                            <span wire:loading.remove wire:target="edit({{ $payment->id }})">
+                            {{-- <span wire:loading.remove wire:target="edit({{ $payment->id }})">
                                 <a href="#edit" wire:click="edit({{ $payment->id }})"
                                     class="text-dark fa-lg me-2 ms-2" title="{{ __('Edit') }}">
                                     <x-icons.edit />
@@ -174,7 +174,7 @@
                             <span wire:loading wire:target="confirmDelete({{ $payment->id }})">
                                 <span class="spinner-border spinner-border-sm text-danger me-2 ms-2"
                                     role="status"></span>
-                            </span>
+                            </span> --}}
                             <!-- Show Payment Icon -->
                             <span wire:loading.remove wire:target="show({{ $payment->id }})">
                                 <a href="#items" wire:click="show({{ $payment->id }})"
